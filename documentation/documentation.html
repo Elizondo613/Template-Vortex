@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Vortex E-Sports — Documentation</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Barlow+Condensed:wght@400;600;700&family=Barlow:wght@300;400;500&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg: #0a0a0c; --bg2: #111116; --bg3: #18181f;
+      --orange: #ff4b2b; --orange2: #ff8c00;
+      --orange-dim: rgba(255,75,43,0.1); --orange-border: rgba(255,75,43,0.28);
+      --text: #c8c8d8; --text-muted: #5a5a72; --white: #f0f0ff;
+      --gold: #f5b800;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { background: var(--bg); color: var(--text); font-family: 'Barlow', sans-serif; font-size: 15px; line-height: 1.7; display: flex; }
+
+    /* Sidebar */
+    .sidebar { width: 260px; min-height: 100vh; background: var(--bg2); border-right: 1px solid rgba(255,255,255,0.05); padding: 32px 0; position: fixed; top: 0; left: 0; overflow-y: auto; }
+    .sidebar-logo { padding: 0 24px 28px; border-bottom: 1px solid rgba(255,255,255,0.05); margin-bottom: 20px; }
+    .sidebar-logo .brand { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 4px; color: var(--white); }
+    .sidebar-logo .brand span { color: var(--orange); }
+    .sidebar-logo .ver { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 2px; color: var(--text-muted); display: block; margin-top: 4px; }
+    .nav-group { padding: 0 24px; }
+    .nav-group-title { font-family: 'Barlow Condensed', sans-serif; font-size: 0.65rem; letter-spacing: 2.5px; text-transform: uppercase; color: var(--text-muted); margin: 20px 0 8px; }
+    .nav-group a { display: flex; align-items: center; gap: 8px; padding: 7px 10px; border-radius: 5px; color: var(--text-muted); font-size: 0.875rem; text-decoration: none; transition: all 0.2s; }
+    .nav-group a .dot { width: 5px; height: 5px; border-radius: 50%; background: currentColor; flex-shrink: 0; }
+    .nav-group a:hover { background: var(--orange-dim); color: var(--orange); }
+
+    /* Main */
+    .main { margin-left: 260px; flex: 1; padding: 52px 60px 80px; max-width: 900px; }
+    .page-header { border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 32px; margin-bottom: 48px; }
+    .tag { display: inline-flex; align-items: center; gap: 7px; font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 2px; color: var(--orange); border: 1px solid var(--orange-border); padding: 4px 12px; border-radius: 3px; background: var(--orange-dim); margin-bottom: 16px; }
+    .tag-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--orange); animation: blink 1.5s ease-in-out infinite; }
+    @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+    .page-header h1 { font-family: 'Bebas Neue', sans-serif; font-size: 2.8rem; letter-spacing: 2px; color: var(--white); margin-bottom: 12px; }
+    .page-header p { color: var(--text-muted); font-size: 1rem; }
+
+    /* Sections */
+    .doc-section { margin-bottom: 60px; scroll-margin-top: 32px; }
+    .doc-section h2 { font-family: 'Bebas Neue', sans-serif; font-size: 1.7rem; letter-spacing: 2px; color: var(--white); margin-bottom: 16px; padding-bottom: 10px; border-bottom: 1px solid rgba(255,255,255,0.06); display: flex; align-items: center; gap: 12px; }
+    .doc-section h2 .num { font-family: 'Barlow Condensed', sans-serif; font-size: 0.72rem; letter-spacing: 2px; color: var(--orange); border: 1px solid var(--orange-border); padding: 2px 8px; border-radius: 3px; }
+    .doc-section h3 { font-family: 'Barlow Condensed', sans-serif; font-size: 1.1rem; font-weight: 700; letter-spacing: 1px; color: var(--white); margin: 24px 0 10px; text-transform: uppercase; }
+    .doc-section p { color: var(--text-muted); margin-bottom: 12px; }
+    .doc-section ul, .doc-section ol { padding-left: 20px; color: var(--text-muted); margin-bottom: 12px; }
+    .doc-section li { margin-bottom: 6px; }
+
+    pre { background: #070a0d; border: 1px solid var(--orange-border); border-radius: 8px; padding: 20px 24px; overflow-x: auto; margin: 16px 0; font-family: 'Courier New', monospace; font-size: 0.82rem; line-height: 1.8; color: var(--text); }
+    code { font-family: 'Courier New', monospace; font-size: 0.82rem; background: var(--orange-dim); color: var(--orange); padding: 2px 7px; border-radius: 4px; }
+    pre code { background: none; padding: 0; color: var(--text); }
+    .cm { color: #4a5568; } .kw { color: #00d4ff; } .st { color: var(--orange); } .pr { color: #f5b800; }
+
+    .file-tree { background: #070a0d; border: 1px solid var(--orange-border); border-radius: 8px; padding: 20px 24px; font-family: 'Courier New', monospace; font-size: 0.82rem; line-height: 2.1; margin: 16px 0; }
+    .ft-folder { color: #00d4ff; } .ft-file { color: var(--text); } .ft-desc { color: var(--text-muted); margin-left: 10px; }
+
+    table { width: 100%; border-collapse: collapse; margin: 16px 0; font-size: 0.875rem; }
+    th { font-family: 'Barlow Condensed', sans-serif; font-size: 0.7rem; letter-spacing: 1.5px; text-transform: uppercase; color: var(--text-muted); text-align: left; padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+    td { padding: 10px 14px; border-bottom: 1px solid rgba(255,255,255,0.04); vertical-align: top; color: var(--text-muted); }
+    td:first-child { font-family: 'Courier New', monospace; color: var(--orange); font-size: 0.8rem; }
+    tr:hover td { background: rgba(255,255,255,0.015); }
+
+    .callout { display: flex; gap: 12px; align-items: flex-start; padding: 14px 18px; border-radius: 8px; margin: 16px 0; font-size: 0.9rem; }
+    .callout-icon { font-size: 1rem; flex-shrink: 0; margin-top: 1px; }
+    .callout.info { background: rgba(0,212,255,0.07); border: 1px solid rgba(0,212,255,0.2); color: #7dd3fc; }
+    .callout.tip { background: var(--orange-dim); border: 1px solid var(--orange-border); color: #fda07a; }
+    .callout.warning { background: rgba(245,184,0,0.07); border: 1px solid rgba(245,184,0,0.25); color: #fcd34d; }
+
+    .credits-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 14px; margin-top: 16px; }
+    .credit-card { background: var(--bg2); border: 1px solid rgba(255,255,255,0.06); border-radius: 8px; padding: 16px 20px; }
+    .credit-card strong { display: block; color: var(--white); margin-bottom: 4px; }
+    .credit-card span { color: var(--text-muted); font-size: 0.82rem; }
+    .credit-card a { color: var(--orange); text-decoration: none; }
+    .credit-card a:hover { text-decoration: underline; }
+
+    .support-box { background: linear-gradient(135deg, rgba(255,75,43,0.06), rgba(255,140,0,0.04)); border: 1px solid var(--orange-border); border-radius: 12px; padding: 32px; text-align: center; margin-top: 16px; }
+    .support-box h3 { font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 2px; color: var(--white); margin-bottom: 10px; }
+    .support-box p { color: var(--text-muted); margin-bottom: 20px; }
+    .support-btn { display: inline-flex; align-items: center; gap: 8px; background: linear-gradient(135deg, var(--orange), var(--orange2)); color: #fff; font-family: 'Barlow Condensed', sans-serif; font-weight: 700; letter-spacing: 1px; padding: 12px 28px; border-radius: 6px; text-decoration: none; font-size: 0.95rem; }
+
+    @media (max-width: 768px) { .sidebar { display: none; } .main { margin-left: 0; padding: 32px 24px 60px; } .credits-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+<aside class="sidebar">
+  <div class="sidebar-logo">
+    <div class="brand">VOR<span>TEX</span></div>
+    <span class="ver">v1.0.0 — DOCUMENTATION</span>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Getting Started</div>
+    <a href="#intro"><span class="dot"></span> Introduction</a>
+    <a href="#requirements"><span class="dot"></span> Requirements</a>
+    <a href="#structure"><span class="dot"></span> File Structure</a>
+    <a href="#quickstart"><span class="dot"></span> Quick Start</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Customization</div>
+    <a href="#colors"><span class="dot"></span> Colors & Theme</a>
+    <a href="#typography"><span class="dot"></span> Typography</a>
+    <a href="#countdown"><span class="dot"></span> Countdown Timer</a>
+    <a href="#roster"><span class="dot"></span> Roster Cards</a>
+    <a href="#matches"><span class="dot"></span> Match Schedule</a>
+    <a href="#animations"><span class="dot"></span> Animations</a>
+  </div>
+  <div class="nav-group">
+    <div class="nav-group-title">Reference</div>
+    <a href="#credits"><span class="dot"></span> Credits</a>
+    <a href="#changelog"><span class="dot"></span> Changelog</a>
+    <a href="#support"><span class="dot"></span> Support</a>
+  </div>
+</aside>
+
+<main class="main">
+
+  <div class="page-header">
+    <div class="tag"><span class="tag-dot"></span> E-SPORTS TEMPLATE DOCUMENTATION</div>
+    <h1>VORTEX DOCUMENTATION</h1>
+    <p>Complete setup and customization guide for the Vortex E-Sports HTML template. No prior experience beyond basic HTML editing required.</p>
+  </div>
+
+  <section class="doc-section" id="intro">
+    <h2><span class="num">01</span> Introduction</h2>
+    <p>Vortex is a premium dark HTML template for professional esports organizations, gaming teams, streamers, and content creators. It features aggressive display typography, vibrant orange accents, a real-time countdown timer, animated player roster cards, and a complete match schedule system.</p>
+    <h3>Sections Included</h3>
+    <ul>
+      <li><strong>Hero</strong> — Full-height with live countdown timer and animated hero stats</li>
+      <li><strong>Games Bar</strong> — Switchable active game tags</li>
+      <li><strong>Roster</strong> — 5 player cards with hexagonal avatars, KPI stats, role badges and social links</li>
+      <li><strong>Match Schedule</strong> — Upcoming matches and past results with VOD links</li>
+      <li><strong>Hall of Fame</strong> — Trophy cards with Gold, Silver, Bronze tiers</li>
+      <li><strong>Stream</strong> — Twitch player mockup UI and social feed posts</li>
+      <li><strong>Sponsors</strong> — Partner grid with title and regular tiers</li>
+      <li><strong>Join / Tryouts</strong> — Application form with game selector</li>
+      <li><strong>Footer</strong> — Full sitemap with social icons</li>
+    </ul>
+  </section>
+
+  <section class="doc-section" id="requirements">
+    <h2><span class="num">02</span> Requirements</h2>
+    <p>Vortex is pure HTML/CSS/JavaScript. No build tools, no npm, no Node.js required.</p>
+    <ul>
+      <li>Any modern browser (Chrome, Firefox, Safari, Edge)</li>
+      <li>A text editor (VS Code recommended)</li>
+      <li>Any static web host for deployment (GitHub Pages, Netlify, Vercel, shared hosting)</li>
+    </ul>
+    <div class="callout tip">
+      <span class="callout-icon">⚡</span>
+      <span>Open <code>index.html</code> directly in your browser to preview — everything works immediately, no server needed.</span>
+    </div>
+    <h3>External CDN Dependencies</h3>
+    <table>
+      <tr><th>Library</th><th>Version</th><th>Purpose</th></tr>
+      <tr><td>AOS</td><td>2.3.1</td><td>Animate on Scroll — section entrance effects</td></tr>
+      <tr><td>Google Fonts</td><td>—</td><td>Bebas Neue (display), Barlow Condensed (UI), Barlow (body)</td></tr>
+    </table>
+  </section>
+
+  <section class="doc-section" id="structure">
+    <h2><span class="num">03</span> File Structure</h2>
+    <div class="file-tree">
+      <div><span class="ft-folder">Vortex-ESports-Template/</span></div>
+      <div>&nbsp;&nbsp;├── <span class="ft-folder">docs/</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="ft-file">index.html</span><span class="ft-desc">← Main HTML file</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;├── <span class="ft-file">style.css</span><span class="ft-desc">← All styles + CSS variables</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="ft-file">script.js</span><span class="ft-desc">← Countdown, counters, interactions</span></div>
+      <div>&nbsp;&nbsp;├── <span class="ft-folder">documentation/</span></div>
+      <div>&nbsp;&nbsp;│&nbsp;&nbsp;&nbsp;└── <span class="ft-file">documentation.html</span><span class="ft-desc">← This file</span></div>
+      <div>&nbsp;&nbsp;└── <span class="ft-file">README.txt</span><span class="ft-desc">← Quick start summary</span></div>
+    </div>
+  </section>
+
+  <section class="doc-section" id="quickstart">
+    <h2><span class="num">04</span> Quick Start</h2>
+    <h3>1. Preview locally</h3>
+    <p>Open <code>docs/index.html</code> in any browser. All animations, fonts and CDN scripts load automatically.</p>
+    <h3>2. Set your team name</h3>
+    <p>Search for <code>VORTEX</code> in <code>docs/index.html</code> and replace with your team name. The name appears in the nav logo, hero, join section, and footer.</p>
+    <h3>3. Deploy</h3>
+    <p>Upload the three files from <code>docs/</code> to any static host. For GitHub Pages: push to a repo, enable Pages under Settings → Pages → Branch: main → / (root).</p>
+    <div class="callout info">
+      <span class="callout-icon">ℹ</span>
+      <span>Keep <code>docs/index.html</code>, <code>style.css</code> and <code>script.js</code> in the same folder. HTML references the other files with relative paths.</span>
+    </div>
+  </section>
+
+  <section class="doc-section" id="colors">
+    <h2><span class="num">05</span> Colors & Theme</h2>
+    <p>All colors are CSS custom properties in <code>style.css</code>. Change the brand color in one place and the entire template updates.</p>
+    <pre><span class="cm">/* style.css — :root block */</span>
+<span class="kw">:root</span> {
+  <span class="cm">/* Backgrounds */</span>
+  <span class="pr">--bg</span>: <span class="st">#0a0a0c</span>;        <span class="cm">/* Page background */</span>
+  <span class="pr">--bg2</span>: <span class="st">#111116</span>;       <span class="cm">/* Cards, sections */</span>
+  <span class="pr">--bg3</span>: <span class="st">#18181f</span>;       <span class="cm">/* Deep elements, inputs */</span>
+
+  <span class="cm">/* Brand / Accent */</span>
+  <span class="pr">--orange</span>: <span class="st">#ff4b2b</span>;    <span class="cm">/* Primary accent */</span>
+  <span class="pr">--orange2</span>: <span class="st">#ff8c00</span>;   <span class="cm">/* Gradient end */</span>
+  <span class="pr">--orange-dim</span>: <span class="st">rgba(255,75,43,0.12)</span>;   <span class="cm">/* Tinted backgrounds */</span>
+  <span class="pr">--orange-border</span>: <span class="st">rgba(255,75,43,0.3)</span>; <span class="cm">/* Glowing borders */</span>
+
+  <span class="cm">/* Text */</span>
+  <span class="pr">--text</span>: <span class="st">#c8c8d8</span>;
+  <span class="pr">--text-muted</span>: <span class="st">#5a5a72</span>;
+  <span class="pr">--white</span>: <span class="st">#f0f0ff</span>;
+}</pre>
+    <h3>Example: Purple/Blue gaming theme</h3>
+    <pre><span class="kw">:root</span> {
+  <span class="pr">--orange</span>: <span class="st">#8b5cf6</span>;    <span class="cm">/* Purple */</span>
+  <span class="pr">--orange2</span>: <span class="st">#3b82f6</span>;   <span class="cm">/* Blue */</span>
+  <span class="pr">--orange-dim</span>: <span class="st">rgba(139,92,246,0.12)</span>;
+  <span class="pr">--orange-border</span>: <span class="st">rgba(139,92,246,0.3)</span>;
+}</pre>
+    <div class="callout tip">
+      <span class="callout-icon">⚡</span>
+      <span>When changing <code>--orange</code>, always update <code>--orange-dim</code> and <code>--orange-border</code> using the same RGB values with lower opacity. This keeps the glow effects consistent.</span>
+    </div>
+  </section>
+
+  <section class="doc-section" id="typography">
+    <h2><span class="num">06</span> Typography</h2>
+    <table>
+      <tr><th>Variable</th><th>Font</th><th>Used for</th></tr>
+      <tr><td>--font-display</td><td>Bebas Neue</td><td>Hero title, section headings, player aliases, logo</td></tr>
+      <tr><td>--font-ui</td><td>Barlow Condensed</td><td>Nav links, tags, labels, game tags, stat labels</td></tr>
+      <tr><td>--font-body</td><td>Barlow</td><td>Paragraphs, form inputs, descriptions</td></tr>
+    </table>
+    <h3>Changing the display font</h3>
+    <pre><span class="cm">&lt;!-- In index.html &lt;head&gt; --&gt;</span>
+&lt;<span class="kw">link</span> href=<span class="st">"https://fonts.googleapis.com/css2?family=Teko:wght@400;700&display=swap"</span> rel=<span class="st">"stylesheet"</span>&gt;
+
+<span class="cm">/* In style.css :root */</span>
+<span class="pr">--font-display</span>: <span class="st">'Teko'</span>, sans-serif;</pre>
+  </section>
+
+  <section class="doc-section" id="countdown">
+    <h2><span class="num">07</span> Countdown Timer</h2>
+    <p>The countdown in the hero counts down to a real date and updates every second. To change the target date, edit <strong>one line</strong> in <code>script.js</code>:</p>
+    <pre><span class="cm">// script.js — line ~20</span>
+<span class="cm">// Format: 'YYYY-MM-DDTHH:MM:SS'</span>
+<span class="kw">const</span> targetDate = <span class="kw">new</span> Date(<span class="st">'2025-04-26T18:00:00'</span>);</pre>
+    <div class="callout info">
+      <span class="callout-icon">ℹ</span>
+      <span>The countdown uses the visitor's local time zone. If your event is in a specific time zone, append the offset: <code>'2025-06-01T20:00:00-05:00'</code> for UTC-5.</span>
+    </div>
+    <h3>Update the event label</h3>
+    <p>The event name below the countdown is a plain text span in <code>index.html</code>:</p>
+    <pre>&lt;<span class="kw">span</span> class=<span class="st">"countdown-event"</span>&gt;APEX WORLD SERIES — GRAND FINAL&lt;/<span class="kw">span</span>&gt;</pre>
+  </section>
+
+  <section class="doc-section" id="roster">
+    <h2><span class="num">08</span> Roster Cards</h2>
+    <p>Each player card is a self-contained block in the <code>.roster-grid</code> div. To update a player:</p>
+    <pre>&lt;<span class="kw">div</span> class=<span class="st">"player-card"</span>&gt;
+  <span class="cm">&lt;!-- 1. Accent bar color (change --c to any hex) --&gt;</span>
+  &lt;<span class="kw">div</span> class=<span class="st">"player-accent"</span> style=<span class="st">"--c:#ff4b2b"</span>&gt;&lt;/div&gt;
+
+  <span class="cm">&lt;!-- 2. Hex avatar initials and stroke color --&gt;</span>
+  &lt;<span class="kw">text</span> fill=<span class="st">"rgba(255,75,43,0.35)"</span> ...&gt;SH&lt;/<span class="kw">text</span>&gt;
+
+  <span class="cm">&lt;!-- 3. Role tag --&gt;</span>
+  &lt;<span class="kw">span</span> class=<span class="st">"player-role"</span>&gt;#FRAGGER&lt;/<span class="kw">span</span>&gt;
+
+  <span class="cm">&lt;!-- 4. Alias and real name --&gt;</span>
+  &lt;<span class="kw">h3</span>&gt;SHADOWBYTE&lt;/<span class="kw">h3</span>&gt;
+  &lt;<span class="kw">span</span> class=<span class="st">"player-realname"</span>&gt;Marcus Reyes&lt;/<span class="kw">span</span>&gt;
+
+  <span class="cm">&lt;!-- 5. KPI stats --&gt;</span>
+  &lt;<span class="kw">div</span> class=<span class="st">"player-kpis"</span>&gt;
+    &lt;<span class="kw">div</span>&gt;&lt;<span class="kw">span</span>&gt;KDA&lt;/...&gt;&lt;<span class="kw">strong</span>&gt;8.4&lt;/...&gt;&lt;/div&gt;
+    ...
+  &lt;/div&gt;
+&lt;/div&gt;</pre>
+    <h3>Featured / Captain card</h3>
+    <p>Add the class <code>featured</code> to a player card to give it the glowing border and captain ribbon:</p>
+    <pre>&lt;<span class="kw">div</span> class=<span class="st">"player-card featured"</span>&gt;
+  &lt;<span class="kw">div</span> class=<span class="st">"player-ribbon"</span>&gt;CAPTAIN&lt;/div&gt;
+  ...</pre>
+    <h3>3D Tilt effect</h3>
+    <p>The card tilt on hover is handled automatically by JavaScript — no configuration needed. To disable it, remove the <code>player-card tilt</code> event listeners block in <code>script.js</code>.</p>
+  </section>
+
+  <section class="doc-section" id="matches">
+    <h2><span class="num">09</span> Match Schedule</h2>
+    <p>Each match is a <code>.match-row</code> div. Status classes control the badge color:</p>
+    <table>
+      <tr><th>Class</th><th>Color</th><th>Use for</th></tr>
+      <tr><td>.status.upcoming</td><td>Orange</td><td>Future matches</td></tr>
+      <tr><td>.status.win</td><td>Green</td><td>Won matches</td></tr>
+      <tr><td>.status.loss</td><td>Red (add to CSS)</td><td>Lost matches</td></tr>
+    </table>
+    <p>Add the class <code>past</code> to a <code>.match-row</code> to visually dim it (opacity 0.65) for past results:</p>
+    <pre>&lt;<span class="kw">div</span> class=<span class="st">"match-row past"</span>&gt; <span class="cm">&lt;!-- Past match --&gt;</span>
+&lt;<span class="kw">div</span> class=<span class="st">"match-row"</span>&gt;       <span class="cm">&lt;!-- Upcoming match --&gt;</span></pre>
+    <h3>Adding a loss status</h3>
+    <p>The template includes <code>win</code> and <code>upcoming</code> styles. To add a loss style, paste this into <code>style.css</code>:</p>
+    <pre><span class="pr">.status.loss</span> {
+  background: <span class="st">rgba(239,68,68,0.12)</span>;
+  color: <span class="st">#f87171</span>;
+  border: <span class="st">1px solid rgba(239,68,68,0.3)</span>;
+}</pre>
+  </section>
+
+  <section class="doc-section" id="animations">
+    <h2><span class="num">10</span> Animations</h2>
+    <p>Scroll animations use AOS. Add <code>data-aos</code> to any element to animate it on scroll:</p>
+    <pre>data-aos=<span class="st">"fade-up"</span>          <span class="cm">// Most common</span>
+data-aos=<span class="st">"fade-right"</span>       <span class="cm">// Slides from left</span>
+data-aos=<span class="st">"zoom-in"</span>          <span class="cm">// Scales in</span>
+data-aos-delay=<span class="st">"200"</span>       <span class="cm">// ms delay</span>
+data-aos-duration=<span class="st">"800"</span>    <span class="cm">// ms duration</span></pre>
+    <h3>CSS-only animations (always run)</h3>
+    <ul>
+      <li><strong>Cursor glow</strong> — follows mouse via JS mousemove event</li>
+      <li><strong>Live badge pulse</strong> — <code>@keyframes blink-dot</code></li>
+      <li><strong>Stream scanline</strong> — <code>@keyframes stream-scan</code></li>
+      <li><strong>Player card 3D tilt</strong> — JS mousemove on .player-card</li>
+    </ul>
+    <h3>Disable cursor glow</h3>
+    <pre><span class="cm">/* Set display none in style.css */</span>
+<span class="pr">.cursor-glow</span> { display: <span class="st">none</span>; }</pre>
+  </section>
+
+  <section class="doc-section" id="credits">
+    <h2><span class="num">11</span> Credits</h2>
+    <div class="credits-grid">
+      <div class="credit-card"><strong>AOS — Animate on Scroll</strong><span>License: MIT · <a href="https://michalsnik.github.io/aos/" target="_blank">michalsnik.github.io/aos</a></span></div>
+      <div class="credit-card"><strong>Bebas Neue (Google Fonts)</strong><span>License: SIL Open Font · <a href="https://fonts.google.com/specimen/Bebas+Neue" target="_blank">fonts.google.com</a></span></div>
+      <div class="credit-card"><strong>Barlow Condensed (Google Fonts)</strong><span>License: SIL Open Font · <a href="https://fonts.google.com/specimen/Barlow+Condensed" target="_blank">fonts.google.com</a></span></div>
+      <div class="credit-card"><strong>Barlow (Google Fonts)</strong><span>License: SIL Open Font · <a href="https://fonts.google.com/specimen/Barlow" target="_blank">fonts.google.com</a></span></div>
+    </div>
+    <div class="callout info" style="margin-top:20px">
+      <span class="callout-icon">ℹ</span>
+      <span>Preview screenshots use images from <a href="https://unsplash.com" style="color:#7dd3fc">Unsplash</a>. Images are <strong>not included</strong> in the template files. Replace placeholder content with your own team assets.</span>
+    </div>
+  </section>
+
+  <section class="doc-section" id="changelog">
+    <h2><span class="num">12</span> Changelog</h2>
+    <h3>v1.0.0 — Initial Release</h3>
+    <ul>
+      <li>Full responsive layout (mobile, tablet, desktop) with hamburger navigation</li>
+      <li>Dark theme with CSS variable color system for instant rebranding</li>
+      <li>Real-time countdown timer with configurable target date</li>
+      <li>Animated hero stat counters (with money and plain number formats)</li>
+      <li>5-player roster grid with hexagonal SVG avatars and 3D tilt on hover</li>
+      <li>Match schedule with UPCOMING, WIN status badges and .past dimming</li>
+      <li>Trophy hall with Gold, Silver, Bronze card tiers</li>
+      <li>Stream section with Twitch mockup UI and social feed</li>
+      <li>Tryout application form with game selector dropdown</li>
+      <li>Mouse-following cursor glow effect</li>
+      <li>Game tag switcher in games bar</li>
+    </ul>
+  </section>
+
+  <section class="doc-section" id="support">
+    <h2><span class="num">13</span> Support</h2>
+    <div class="support-box">
+      <h3>NEED HELP? WE'VE GOT YOU.</h3>
+      <p>Submit a support request via your Codester purchase page. We respond within 24–48 hours on business days.</p>
+      <a href="https://www.codester.com" class="support-btn">Open Support Request</a>
+    </div>
+    <div class="callout warning" style="margin-top:24px">
+      <span class="callout-icon">⚠</span>
+      <span><strong>Support covers:</strong> template bugs, customization guidance, and setup questions. Does not include custom development, complete redesigns, or third-party service integrations.</span>
+    </div>
+  </section>
+
+</main>
+</body>
+</html>
